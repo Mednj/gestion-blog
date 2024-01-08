@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (blog) {
+      <div>
+        <h2 data-cy="blogDetailsHeading"><span jhiTranslate="blogMicroApp.blog.detail.title">Blog</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ blog.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="blogMicroApp.blog.title">Title</span></dt>
+          <dd>
+            <span>{{ blog.title }}</span>
+          </dd>
+          <dt><span jhiTranslate="blogMicroApp.blog.content">Content</span></dt>
+          <dd>
+            <span>{{ blog.content }}</span>
+          </dd>
+          <dt><span jhiTranslate="blogMicroApp.blog.date">Date</span></dt>
+          <dd>
+            <span>{{ blog.date | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="blogMicroApp.blog.mainImage">Main Image</span></dt>
+          <dd>
+            @if (blog.mainImage) {
+              <div>
+                <a (click)="openFile(blog.mainImage, blog.mainImageContentType)">
+                  <img [src]="'data:' + blog.mainImageContentType + ';base64,' + blog.mainImage" style="max-width: 100%" alt="blog image" />
+                </a>
+                {{ blog.mainImageContentType }}, {{ byteSize(blog.mainImage) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="blogMicroApp.blog.document">Document</span></dt>
+          <dd>
+            @if (blog.document) {
+              <div>
+                <a (click)="openFile(blog.document, blog.documentContentType)" jhiTranslate="entity.action.open">Open</a>
+                {{ blog.documentContentType }}, {{ byteSize(blog.document) }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="blogMicroApp.blog.blogger">Blogger</span></dt>
+          <dd>
+            @if (blog.blogger) {
+              <div>
+                <a [routerLink]="['/blogger', blog.blogger.id, 'view']">{{ blog.blogger.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/blog', blog.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,29 @@
+{
+  "blogMicroApp": {
+    "blogger": {
+      "home": {
+        "title": "Bloggers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Blogger",
+        "createOrEditLabel": "Create or edit a Blogger",
+        "notFound": "No Bloggers found"
+      },
+      "created": "A new Blogger is created with identifier {{ param }}",
+      "updated": "A Blogger is updated with identifier {{ param }}",
+      "deleted": "A Blogger is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Blogger {{ id }}?"
+      },
+      "detail": {
+        "title": "Blogger"
+      },
+      "id": "ID",
+      "username": "Username",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "profileImage": "Profile Image",
+      "blogs": "Blogs"
+    }
+  }
+}

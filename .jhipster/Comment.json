@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20240107221321"
+  },
+  "applications": "*",
+  "entityTableName": "comment",
+  "fields": [
+    {
+      "fieldName": "content",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "Comment",
+  "relationships": [
+    {
+      "otherEntityName": "blog",
+      "otherEntityRelationshipName": "comments",
+      "relationshipName": "blog",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

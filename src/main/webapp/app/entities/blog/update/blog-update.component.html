@@ -1,0 +1,162 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-blog-heading" data-cy="BlogCreateUpdateHeading" jhiTranslate="blogMicroApp.blog.home.createOrEditLabel">
+        Create or edit a Blog
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="blogMicroApp.blog.title" for="field_title">Title</label>
+          <input type="text" class="form-control" name="title" id="field_title" data-cy="title" formControlName="title" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="blogMicroApp.blog.content" for="field_content">Content</label>
+          <textarea class="form-control" name="content" id="field_content" data-cy="content" formControlName="content"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="blogMicroApp.blog.date" for="field_date">Date</label>
+          <div class="d-flex">
+            <input
+              id="field_date"
+              data-cy="date"
+              type="datetime-local"
+              class="form-control"
+              name="date"
+              formControlName="date"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="blogMicroApp.blog.mainImage" for="field_mainImage">Main Image</label>
+          <div>
+            @if (editForm.get('mainImage')!.value) {
+              <img
+                [src]="'data:' + editForm.get('mainImageContentType')!.value + ';base64,' + editForm.get('mainImage')!.value"
+                style="max-height: 100px"
+                alt="blog image"
+              />
+            }
+            @if (editForm.get('mainImage')!.value) {
+              <div class="form-text text-danger clearfix">
+                <span class="pull-start"
+                  >{{ editForm.get('mainImageContentType')!.value }}, {{ byteSize(editForm.get('mainImage')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="clearInputImage('mainImage', 'mainImageContentType', 'file_mainImage')"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_mainImage"
+              data-cy="mainImage"
+              (change)="setFileData($event, 'mainImage', true)"
+              accept="image/*"
+              jhiTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="mainImage" id="field_mainImage" data-cy="mainImage" formControlName="mainImage" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="mainImageContentType"
+            id="field_mainImageContentType"
+            formControlName="mainImageContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="blogMicroApp.blog.document" for="field_document">Document</label>
+          <div>
+            @if (editForm.get('document')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('document')!.value!, editForm.get('documentContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start"
+                  >{{ editForm.get('documentContentType')!.value }}, {{ byteSize(editForm.get('document')!.value!) }}</span
+                >
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ document: undefined, documentContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input
+              type="file"
+              id="file_document"
+              data-cy="document"
+              (change)="setFileData($event, 'document', false)"
+              jhiTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="document" id="field_document" data-cy="document" formControlName="document" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="documentContentType"
+            id="field_documentContentType"
+            formControlName="documentContentType"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="blogMicroApp.blog.blogger" for="field_blogger">Blogger</label>
+          <select
+            class="form-control"
+            id="field_blogger"
+            data-cy="blogger"
+            name="blogger"
+            formControlName="blogger"
+            [compareWith]="compareBlogger"
+          >
+            <option [ngValue]="null"></option>
+            @for (bloggerOption of bloggersSharedCollection; track $index) {
+              <option [ngValue]="bloggerOption">{{ bloggerOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20240107221121"
+  },
+  "applications": "*",
+  "entityTableName": "blogger",
+  "fields": [
+    {
+      "fieldName": "username",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "profileImage",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "name": "Blogger",
+  "relationships": [
+    {
+      "otherEntityName": "blog",
+      "otherEntityRelationshipName": "blogger",
+      "relationshipName": "blogs",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

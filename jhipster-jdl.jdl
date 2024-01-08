@@ -1,0 +1,32 @@
+
+entity Blogger {
+    username String
+    firstName String
+    lastName String
+    email String
+    profileImage ImageBlob
+   
+}
+
+entity Blog {
+    title String
+    content TextBlob
+    date ZonedDateTime
+    mainImage ImageBlob
+    document Blob
+    
+}
+
+entity Comment {
+    content TextBlob
+    date ZonedDateTime
+   
+}
+
+
+
+// Define relationships
+relationship OneToMany {
+    Blogger{blogs} to Blog{blogger}
+    Blog{comments} to Comment{blog}
+}
